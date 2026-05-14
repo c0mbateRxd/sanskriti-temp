@@ -1,0 +1,220 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Application user profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "wishlist": { "type": "array", "items": { "type": "string" } },
+        "cart": { "type": "array", "items": { "type": "object" } },
+        "enrolledClasses": { "type": "array", "items": { "type": "string" } },
+        "achievements": { "type": "array", "items": { "type": "string" } },
+        "preferences": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "Artist": {
+      "title": "Artist",
+      "description": "Artisan or mentor profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "state": { "type": "string" },
+        "specialization": { "type": "string" },
+        "experience": { "type": "string" },
+        "languages": { "type": "array", "items": { "type": "string" } },
+        "teachingMode": { "type": "string", "enum": ["Online", "Offline", "Hybrid"] },
+        "bio": { "type": "string" },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "price": { "type": "number" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "social": { "type": "object" },
+        "rating": { "type": "number" },
+        "reviewsCount": { "type": "number" },
+        "avatar": { "type": "string" },
+        "portfolio": { "type": "array", "items": { "type": "string" } },
+        "demoVideos": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Craft marketplace product",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "artisanId": { "type": "string" },
+        "artisanName": { "type": "string" },
+        "state": { "type": "string" },
+        "price": { "type": "number" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "rating": { "type": "number" },
+        "reviews": { "type": "number" },
+        "trending": { "type": "boolean" }
+      }
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Live session booking",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "artistId": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "LiveSession": {
+      "title": "Live Session",
+      "description": "Scheduled live workshop",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "artistId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "startTime": { "type": "string", "format": "date-time" },
+        "duration": { "type": "number" },
+        "maxParticipants": { "type": "number" },
+        "currentParticipants": { "type": "number" },
+        "type": { "type": "string", "enum": ["Workshop", "Masterclass", "Performance"] }
+      }
+    },
+    "Video": {
+      "title": "Video",
+      "description": "Video tutorial or performance",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "artistId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "url": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "category": { "type": "string" },
+        "likes": { "type": "number" },
+        "views": { "type": "number" }
+      }
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Artist or product review",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "targetId": { "type": "string" },
+        "type": { "type": "string", "enum": ["artist", "product"] },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Achievement": {
+      "title": "Achievement",
+      "description": "User learning badge",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "badge": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Chat": {
+      "title": "Chat",
+      "description": "Message thread between artist and user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "participants": { "type": "array", "items": { "type": "string" } },
+        "lastMessage": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "FolkloreStory": {
+      "title": "Folklore Story",
+      "description": "Indian cultural tale or legend",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "state": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "characters": { "type": "array", "items": { "type": "string" } },
+        "moral": { "type": "string" },
+        "illustration": { "type": "string" },
+        "narrationUrl": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "likes": { "type": "number" },
+        "creatorId": { "type": "string" },
+        "published": { "type": "boolean" }
+      }
+    },
+    "Chapter": {
+      "title": "Story Chapter",
+      "description": "Single part of a folklore saga",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "storyId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "order": { "type": "number" }
+      }
+    },
+    "Stream": {
+      "title": "Livestream",
+      "description": "Active or past livestream session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "creatorId": { "type": "string" },
+        "title": { "type": "string" },
+        "status": { "type": "string", "enum": ["live", "ended", "scheduled"] },
+        "viewerCount": { "type": "number" },
+        "thumbnail": { "type": "string" },
+        "startTime": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "User comment on content",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "targetId": { "type": "string" },
+        "content": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "users": { "schema": "User", "description": "Manage user accounts" },
+    "artists": { "schema": "Artist", "description": "Artist master directory" },
+    "products": { "schema": "Product", "description": "Marketplace products" },
+    "bookings": { "schema": "Booking", "description": "Live session enrollments" },
+    "liveSessions": { "schema": "LiveSession", "description": "Available live workshops" },
+    "videos": { "schema": "Video", "description": "Artistic tutorials & demos" },
+    "reviews": { "schema": "Review", "description": "Verified ratings" },
+    "achievements": { "schema": "Achievement", "description": "User badges" },
+    "chats": { "schema": "Chat", "description": "Community & Mentor chat threads" },
+    "folklore": { "schema": "FolkloreStory", "description": "Digital library of Indian tales" },
+    "chapters": { "schema": "Chapter", "description": "Story segments" },
+    "streams": { "schema": "Stream", "description": "Real-time cultural broadcasts" },
+    "comments": { "schema": "Comment", "description": "Social interaction feed" }
+  }
+}

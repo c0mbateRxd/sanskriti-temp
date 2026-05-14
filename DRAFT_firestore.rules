@@ -1,0 +1,87 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    // User Profile Rules
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow list: if false; // Users shouldn't be listable generally
+      allow create: if isOwner(userId) && isValidUser(incoming());
+      allow update: if isOwner(userId) && isValidUser(incoming()) && (
+        incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'photoURL', 'wishlist', 'cart', 'enrolledClasses', 'achievements', 'preferences'])
+      );
+    }
+
+    function isValidUser(data) {
+      return data.uid is string && data.email is string && 
+             data.displayName is string && data.displayName.size() <= 100;
+    }
+
+    // Artist Profile Rules (Public Read, Admin/Mentor Write)
+    match /artists/{artistId} {
+      allow get, list: if true;
+      allow create, update: if isSignedIn() && (isOwner(artistId) || request.auth.token.admin == true);
+    }
+
+    // Product Rules (Public Read, Admin Write)
+    match /products/{productId} {
+      allow get, list: if true;
+      allow create, update, delete: if isSignedIn() && request.auth.token.admin == true;
+    }
+
+    // Booking Rules
+    match /bookings/{bookingId} {
+      allow get: if isSignedIn() && (isOwner(existing().userId) || isOwner(existing().artistId));
+      allow list: if isSignedIn() && (resource.data.userId == request.auth.uid || resource.data.artistId == request.auth.uid);
+      allow create: if isSignedIn() && isOwner(incoming().userId) && isValidBooking(incoming());
+      allow update: if isSignedIn() && (isOwner(existing().userId) || isOwner(existing().artistId)) && (
+        incoming().diff(existing()).affectedKeys().hasOnly(['status'])
+      );
+    }
+
+    function isValidBooking(data) {
+      return data.userId is string && data.artistId is string && data.sessionId is string;
+    }
+
+    // Live Sessions
+    match /liveSessions/{sessionId} {
+      allow get, list: if true;
+      allow create, update, delete: if isSignedIn() && (isOwner(incoming().artistId) || request.auth.token.admin == true);
+    }
+
+    // Videos
+    match /videos/{videoId} {
+      allow get, list: if true;
+      allow create, update, delete: if isSignedIn() && (isOwner(incoming().artistId) || request.auth.token.admin == true);
+    }
+
+    // Reviews
+    match /reviews/{reviewId} {
+      allow get, list: if true;
+      allow create: if isSignedIn() && isOwner(incoming().userId);
+      allow update, delete: if isSignedIn() && isOwner(existing().userId);
+    }
+
+    // Achievements
+    match /achievements/{achievementId} {
+      allow get, list: if isSignedIn() && isOwner(resource.data.userId);
+      allow create, update, delete: if isSignedIn() && request.auth.token.admin == true;
+    }
+
+    // Chats
+    match /chats/{chatId} {
+      allow get, list, create, update: if isSignedIn() && request.auth.uid in resource.data.participants;
+    }
+  }
+}
