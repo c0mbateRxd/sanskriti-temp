@@ -1,6 +1,4 @@
 import { collection, addDoc, getDocs, query, where, Timestamp, doc, getDoc, getDocFromServer } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, storage, auth } from './config';
 
 enum OperationType {
   CREATE = 'create',
@@ -145,16 +143,9 @@ export const getStories = async (stateFilter?: string) => {
 
 export const submitContribution = async (data: Omit<Story, 'id' | 'createdAt'>, imageFile?: File) => {
   try {
-    let imageUrl = '';
-    if (imageFile) {
-      const storageRef = ref(storage, `${CONTRIBUTIONS_COLLECTION}/${Date.now()}_${imageFile.name}`);
-      const snapshot = await uploadBytes(storageRef, imageFile);
-      imageUrl = await getDownloadURL(snapshot.ref);
-    }
-
     const docRef = await addDoc(collection(db, CONTRIBUTIONS_COLLECTION), {
       ...data,
-      image: imageUrl || data.image || '',
+      image: '',
       createdAt: Timestamp.now(),
       author: auth.currentUser?.email || 'Anonymous',
     });

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged, User as FirebaseUser, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
 import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
-import { auth, db } from '../lib/firebase';
+import { auth, db } from '../firebase/config';
 import { Review } from '../data/products';
 
 interface UserProfile {
