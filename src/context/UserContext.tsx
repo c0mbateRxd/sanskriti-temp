@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { onAuthStateChanged, User as FirebaseUser, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { onAuthStateChanged, User as FirebaseUser, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut } from 'firebase/auth';
 import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '../firebase/config';
 import { Review } from '../data/products';
@@ -89,6 +89,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [theme]);
 
+  // Handle redirect result on page load
+  useEffect(() => {
+    getRedirectResult(auth).catch((error) => {
+      console.error('Redirect result error:', error);
+    });
+  }, []);
+
   // Auth Listener
   useEffect(() => {
     return onAuthStateChanged(auth, async (u) => {
@@ -127,7 +134,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
       } else {
         setProfile(null);
-        // Fallback to local storage if not logged in
         const savedExp = localStorage.getItem('sanskriti-explored');
         const savedWish = localStorage.getItem('sanskriti-wishlist');
         const savedCart = localStorage.getItem('sanskriti-cart');
@@ -142,12 +148,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      await signInWithRedirect(auth, provider);
     } catch (error: any) {
-      if (error.code === 'auth/popup-closed-by-user') {
-        console.log('Login popup closed by user');
-        return;
-      }
       console.error('Login error:', error);
       throw error;
     }
@@ -157,7 +159,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await signOut(auth);
   };
 
-  // Sync Local Storage as fallback
   useEffect(() => {
     if (!user) {
       localStorage.setItem('sanskriti-explored', JSON.stringify(exploredStates));
@@ -216,7 +217,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
       ...prev,
       [productId]: [newReview, ...(prev[productId] || [])]
     }));
-    // Note: In production, this would go to a global reviews collection
   };
 
   const isStateExplored = (stateId: string) => exploredStates.includes(stateId);
