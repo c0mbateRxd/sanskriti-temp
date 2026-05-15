@@ -5,16 +5,15 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import TrendingSection from '../components/TrendingSection';
 import ProgressTracker from '../components/ProgressTracker';
-import { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 const BG_IMAGES = [
-  'https://images.unsplash.com/photo-1599661046289-e31897856741?auto=format&fit=crop&q=80&w=1920', // Rajasthan dancers
-  'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&q=80&w=1920', // Temple
-  'https://images.unsplash.com/photo-1541014285461-84067980ea0a?auto=format&fit=crop&q=80&w=1920', // Karnataka
-  'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=1920', // Kerala
-  'https://images.unsplash.com/photo-1514222139-b576bb5ce003?auto=format&fit=crop&q=80&w=1920', // Culture
+  'https://images.unsplash.com/photo-1599661046289-e31897856741?auto=format&fit=crop&q=80&w=1920',
+  'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&q=80&w=1920',
+  'https://images.unsplash.com/photo-1541014285461-84067980ea0a?auto=format&fit=crop&q=80&w=1920',
+  'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=1920',
+  'https://images.unsplash.com/photo-1514222139-b576bb5ce003?auto=format&fit=crop&q=80&w=1920',
 ];
 
 function AshokaChakra() {
@@ -36,13 +35,7 @@ function AshokaChakra() {
           const x2 = 100 + 92 * Math.cos(rad);
           const y2 = 100 + 92 * Math.sin(rad);
           return (
-            <line
-              key={i}
-              x1={x1} y1={y1}
-              x2={x2} y2={y2}
-              stroke="#f97316"
-              strokeWidth="2"
-            />
+            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#f97316" strokeWidth="2"/>
           );
         })}
       </svg>
@@ -51,30 +44,30 @@ function AshokaChakra() {
 }
 
 export default function Home() {
- const { t } = useLanguage();
-const [stats, setStats] = useState({ users: 0, states: 0, mentors: 0, stories: 0 });
-
-useEffect(() => {
-  const fetchStats = async () => {
-    try {
-      const [usersSnap, artistsSnap, contribSnap] = await Promise.all([
-        getDocs(collection(db, 'users')),
-        getDocs(collection(db, 'artists')),
-        getDocs(collection(db, 'contributions'))
-      ]);
-      setStats({
-        users: usersSnap.size,
-        states: 28,
-        mentors: artistsSnap.size,
-        stories: contribSnap.size
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
-  fetchStats();
-}, []);
+  const { t } = useLanguage();
+  const [stats, setStats] = useState({ users: 0, states: 0, mentors: 0, stories: 0 });
   const [currentBg, setCurrentBg] = useState(0);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const [usersSnap, artistsSnap, contribSnap] = await Promise.all([
+          getDocs(collection(db, 'users')),
+          getDocs(collection(db, 'artists')),
+          getDocs(collection(db, 'contributions'))
+        ]);
+        setStats({
+          users: usersSnap.size,
+          states: 28,
+          mentors: artistsSnap.size,
+          stories: contribSnap.size
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchStats();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -85,10 +78,8 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen pb-20 space-y-32">
-      {/* Hero Section */}
       <section className="relative pt-20 pb-0 px-6 min-h-screen flex items-center overflow-hidden">
         
-        {/* Dynamic Background */}
         <AnimatePresence mode="sync">
           <motion.div
             key={currentBg}
@@ -98,19 +89,13 @@ useEffect(() => {
             transition={{ duration: 1.5 }}
             className="absolute inset-0 z-0"
           >
-            <img
-              src={BG_IMAGES[currentBg]}
-              alt=""
-              className="w-full h-full object-cover"
-            />
+            <img src={BG_IMAGES[currentBg]} alt="" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-white/80 dark:bg-zinc-950/85" />
           </motion.div>
         </AnimatePresence>
 
-        {/* Ashoka Chakra */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <AshokaChakra />
-          {/* Second smaller one bottom left */}
           <motion.div
             animate={{ rotate: -360 }}
             transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
@@ -135,7 +120,6 @@ useEffect(() => {
           </motion.div>
         </div>
 
-        {/* Image dots indicator */}
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-10">
           {BG_IMAGES.map((_, i) => (
             <button
@@ -201,57 +185,56 @@ useEffect(() => {
 
           <div className="relative pt-20">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-orange-500/10 blur-[120px] rounded-full -z-10" />
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
-  {[
-    { icon: Compass, label: 'Cultural Deep-Dive', color: 'orange', stat: null },
-    { icon: Sparkles, label: 'AI Narratives', color: 'rose', stat: null },
-    { icon: MapPin, label: 'State Discovery', color: 'indigo', stat: null },
-    { icon: TrendingUp, label: 'Heritage Trends', color: 'emerald', stat: null }
-  ].map((item, i) => (
-    <motion.div
-      key={i}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4 + (i * 0.1) }}
-      className="p-8 bg-white/40 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl text-center space-y-4 shadow-xl"
-    >
-      <item.icon className={`w-8 h-8 mx-auto text-${item.color}-500`} />
-      <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40">{item.label}</p>
-    </motion.div>
-  ))}
-</div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+              {[
+                { icon: Compass, label: 'Cultural Deep-Dive', color: 'orange' },
+                { icon: Sparkles, label: 'AI Narratives', color: 'rose' },
+                { icon: MapPin, label: 'State Discovery', color: 'indigo' },
+                { icon: TrendingUp, label: 'Heritage Trends', color: 'emerald' }
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + (i * 0.1) }}
+                  className="p-8 bg-white/40 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl text-center space-y-4 shadow-xl"
+                >
+                  <item.icon className={`w-8 h-8 mx-auto text-${item.color}-500`} />
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-white/40">{item.label}</p>
+                </motion.div>
+              ))}
+            </div>
 
-{/* Live Stats from Firestore */}
-<div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-8">
-  {[
-    { label: 'Users', value: stats.users, icon: '👥' },
-    { label: 'States', value: stats.states, icon: '🗺️' },
-    { label: 'Mentors', value: stats.mentors, icon: '🎨' },
-    { label: 'Stories', value: stats.stories, icon: '📖' },
-  ].map((stat, i) => (
-    <motion.div
-      key={i}
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.6 + (i * 0.1) }}
-      className="p-6 bg-white/60 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl text-center space-y-2 shadow-xl"
-    >
-      <div className="text-3xl">{stat.icon}</div>
-      <p className="text-3xl font-black text-slate-900 dark:text-white">{stat.value}</p>
-      <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-white/20">{stat.label}</p>
-    </motion.div>
-  ))}
-</div>
+            {/* Live Stats from Firestore */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-8">
+              {[
+                { label: 'Users', value: stats.users, icon: '👥' },
+                { label: 'States', value: stats.states, icon: '🗺️' },
+                { label: 'Mentors', value: stats.mentors, icon: '🎨' },
+                { label: 'Stories', value: stats.stories, icon: '📖' },
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 + (i * 0.1) }}
+                  className="p-6 bg-white/60 dark:bg-white/5 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl text-center space-y-2 shadow-xl"
+                >
+                  <div className="text-3xl">{stat.icon}</div>
+                  <p className="text-3xl font-black text-slate-900 dark:text-white">{stat.value}</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-white/20">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Progress Section */}
       <section className="max-w-7xl mx-auto px-6">
         <ProgressTracker />
       </section>
 
-      {/* Trending Section */}
       <section className="max-w-7xl mx-auto px-6">
         <TrendingSection />
       </section>
