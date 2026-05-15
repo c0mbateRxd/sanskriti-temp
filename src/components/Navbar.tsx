@@ -29,6 +29,7 @@ export default function Navbar() {
     { path: '/community', label: 'Nexus', icon: MessageSquare },
     { path: '/library', label: 'Vault', icon: Play },
     { path: '/roadmap', label: 'Roadmap', icon: MapPin },
+    { path: '/quiz', label: 'Quiz', icon: Sparkles },
   ];
 
   return (
