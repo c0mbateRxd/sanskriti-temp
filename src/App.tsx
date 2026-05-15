@@ -22,13 +22,11 @@ import LiveStreamingRoom from './pages/LiveStreamingRoom';
 import Community from './pages/Community';
 import Onboarding from './pages/Onboarding';
 import ArtisanVerify from './pages/ArtisanVerify';
+import Roadmap from './pages/Roadmap';
+import Quiz from './pages/Quiz';
 import { LanguageProvider } from './context/LanguageContext';
 import { UserProvider } from './context/UserContext';
 import Chatbot from './components/Chatbot';
-import Roadmap from './pages/Roadmap';
-import Quiz from './pages/Quiz';
-// add route:
-<Route path="/quiz" element={<Quiz />} />
 
 export default function App() {
   return (
@@ -62,6 +60,7 @@ export default function App() {
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/roadmap" element={<Roadmap />} />
                 <Route path="/artisan-verify" element={<ArtisanVerify />} />
+                <Route path="/quiz" element={<Quiz />} />
               </Routes>
             </main>
 
