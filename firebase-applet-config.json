@@ -1,10 +1,9 @@
 {
-  "projectId": "sanskriti-777",
-  "appId": "1:829629209099:web:50add185478a794d72450e",
-  "apiKey": "AIzaSyC58eHT0xQMMLeOJt91gklOSm7DsbwPRMY",
+  "apiKey": "AIzaSyC58eHT0xQMMLe0Jt91gklOSm7DsbwPRMY",
   "authDomain": "sanskriti-777.firebaseapp.com",
-  "firestoreDatabaseId": "(default)",
-  "storageBucket": "sanskriti-777.appspot.com",
+  "projectId": "sanskriti-777",
+  "storageBucket": "sanskriti-777.firebasestorage.app",
   "messagingSenderId": "829629209099",
-  "measurementId": ""
+  "appId": "1:829629209099:web:50add185478a794d72450e",
+  "firestoreDatabaseId": "(default)"
 }
