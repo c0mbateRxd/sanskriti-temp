@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { onAuthStateChanged, User as FirebaseUser, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { onAuthStateChanged, User as FirebaseUser, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
 import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '../firebase/config';
 import { Review } from '../data/products';
@@ -89,14 +89,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [theme]);
 
-  // Handle redirect result on page load
-  useEffect(() => {
-    getRedirectResult(auth).catch((error) => {
-      console.error('Redirect result error:', error);
-    });
-  }, []);
-
-  // Auth Listener
   useEffect(() => {
     return onAuthStateChanged(auth, async (u) => {
       setUser(u);
@@ -122,7 +114,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setProfile(snapshot.data() as UserProfile);
         }
 
-        // Real-time sync
         onSnapshot(userDoc, (doc) => {
           if (doc.exists()) {
             const data = doc.data() as UserProfile;
@@ -148,8 +139,12 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithRedirect(auth, provider);
+      await signInWithPopup(auth, provider);
     } catch (error: any) {
+      if (error.code === 'auth/popup-closed-by-user') {
+        console.log('Login popup closed by user');
+        return;
+      }
       console.error('Login error:', error);
       throw error;
     }
