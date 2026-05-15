@@ -25,6 +25,7 @@ import ArtisanVerify from './pages/ArtisanVerify';
 import { LanguageProvider } from './context/LanguageContext';
 import { UserProvider } from './context/UserContext';
 import Chatbot from './components/Chatbot';
+import Roadmap from './pages/Roadmap';
 
 export default function App() {
   return (
@@ -56,6 +57,7 @@ export default function App() {
                 <Route path="/creator/video-editor" element={<VideoEditor />} />
                 <Route path="/live/studio" element={<LiveStreamingRoom />} />
                 <Route path="/onboarding" element={<Onboarding />} />
+                <Route path="/roadmap" element={<Roadmap />} />
                 <Route path="/artisan-verify" element={<ArtisanVerify />} />
               </Routes>
             </main>
