@@ -156,17 +156,37 @@ export default function StudentDashboard() {
                  )}
               </div>
            </div>
-
-           <div className="bg-indigo-600 rounded-[48px] p-10 text-white space-y-6 relative overflow-hidden group">
-              <Sparkles className="absolute top-10 right-10 w-20 h-20 text-white/10 group-hover:scale-150 transition-transform duration-700" />
-              <div className="relative z-10 space-y-6">
-                <h4 className="text-2xl font-black uppercase tracking-tighter leading-none italic">AI Recommended <br /> Paths</h4>
-                <p className="text-sm font-medium text-white/60">Based on your interest in Textile Art, we suggest learning from Ranganathan S. in Tamil Nadu.</p>
-                <button className="w-full py-4 bg-white text-indigo-600 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl">
-                  View Path
-                </button>
-              </div>
-           </div>
+<div className="bg-indigo-600 rounded-[48px] p-10 text-white space-y-6 relative overflow-hidden group">
+  <Sparkles className="absolute top-10 right-10 w-20 h-20 text-white/10 group-hover:scale-150 transition-transform duration-700" />
+  <div className="relative z-10 space-y-6">
+    <h4 className="text-2xl font-black uppercase tracking-tighter leading-none italic">AI Recommended <br /> Paths</h4>
+    {profile?.interests && profile.interests.length > 0 ? (
+      <div className="space-y-3">
+        <p className="text-sm font-medium text-white/60">
+          Based on your interests in <span className="text-white font-black">{profile.interests.slice(0, 2).join(' & ')}</span>, we recommend:
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {profile.interests.map((interest: string) => (
+            <span key={interest} className="px-3 py-1 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/20">
+              {interest}
+            </span>
+          ))}
+        </div>
+      </div>
+    ) : (
+      <p className="text-sm font-medium text-white/60">
+        Complete onboarding to get personalized recommendations.
+      </p>
+    )}
+    <button 
+      onClick={() => navigate('/mentors')}
+      className="w-full py-4 bg-white text-indigo-600 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl hover:scale-105 transition-all"
+    >
+      Find Mentors →
+    </button>
+  </div>
+</div>
+          
         </div>
       </div>
     </div>
