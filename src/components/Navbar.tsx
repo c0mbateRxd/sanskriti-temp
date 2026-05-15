@@ -28,6 +28,7 @@ export default function Navbar() {
     { path: '/folklore', label: 'Universe', icon: Book },
     { path: '/community', label: 'Nexus', icon: MessageSquare },
     { path: '/library', label: 'Vault', icon: Play },
+    { path: '/roadmap', label: 'Roadmap', icon: MapPin },
   ];
 
   return (
