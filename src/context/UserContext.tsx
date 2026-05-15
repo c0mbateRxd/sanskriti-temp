@@ -14,8 +14,11 @@ interface UserProfile {
   exploredStates: string[];
   enrolledClasses: string[];
   achievements: string[];
+  interests: string[];
+  role: string;
+  onboarded: boolean;
+  verificationStatus?: string;
 }
-
 interface UserContextType {
   user: FirebaseUser | null;
   profile: UserProfile | null;
