@@ -26,6 +26,9 @@ import { LanguageProvider } from './context/LanguageContext';
 import { UserProvider } from './context/UserContext';
 import Chatbot from './components/Chatbot';
 import Roadmap from './pages/Roadmap';
+import Quiz from './pages/Quiz';
+// add route:
+<Route path="/quiz" element={<Quiz />} />
 
 export default function App() {
   return (
