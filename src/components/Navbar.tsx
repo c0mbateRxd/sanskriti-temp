@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, Menu, X, Compass, Home, User, Award, ShoppingBag, GraduationCap, LayoutDashboard, LogIn, MessageSquare, Play, Book, Video } from 'lucide-react';
+import { Sparkles, Menu, X, Compass, Home, ShoppingBag, GraduationCap, LogIn, MessageSquare, Play, Book, Video, MapPin } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useLanguage } from '../context/LanguageContext';
@@ -9,7 +9,7 @@ import { useUser } from '../context/UserContext';
 
 export default function Navbar() {
   const { t } = useLanguage();
-  const { user, profile, login, logout } = useUser();
+  const { user, login } = useUser();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
