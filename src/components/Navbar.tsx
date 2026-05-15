@@ -33,13 +33,9 @@ export default function Navbar() {
   ];
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4 ${
-        isScrolled 
-          ? 'bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/5 py-3' 
-          : 'bg-transparent'
-      }`}
-    >
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4 ${
+      isScrolled ? 'bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/5 py-3' : 'bg-transparent'
+    }`}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
           <div className="relative">
@@ -51,7 +47,6 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           <div className="flex items-center gap-2 bg-slate-200/50 dark:bg-white/5 p-1 rounded-full border border-slate-300 dark:border-white/10">
             {navLinks.map((link) => (
@@ -84,10 +79,9 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <LanguageSwitcher />
             <ThemeToggle />
-            
             {user ? (
               <div className="flex items-center gap-3">
-                <Link 
+                <Link
                   to="/creator-dashboard"
                   className="hidden lg:flex items-center gap-2 px-4 py-2 bg-indigo-500/10 hover:bg-indigo-500 transition-all text-indigo-600 hover:text-white rounded-full text-[10px] font-black uppercase tracking-widest border border-indigo-500/20"
                 >
@@ -100,7 +94,7 @@ export default function Navbar() {
                 </Link>
               </div>
             ) : (
-              <button 
+              <button
                 onClick={() => login()}
                 className="flex items-center gap-2 px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl hover:scale-105 transition-all"
               >
@@ -111,8 +105,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Toggle */}
-        <button 
+        <button
           className="md:hidden p-2 rounded-full bg-slate-200 dark:bg-white/5 text-slate-900 dark:text-white"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
@@ -120,7 +113,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
