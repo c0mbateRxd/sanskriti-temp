@@ -24,10 +24,13 @@ export const StateCard: React.FC<StateCardProps> = ({ state, onClick }) => {
     >
       {/* Background Image with animated zoom */}
       <motion.img
-        src={state.image}
-        alt={state.name[language]}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-      />
+  src={state.image}
+  alt={state.name[language]}
+  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+  onError={(e) => {
+    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=800';
+  }}
+/>
 
       {/* Overlays */}
       <div className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-80`} />
