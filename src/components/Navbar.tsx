@@ -46,7 +46,6 @@ export default function Navbar() {
             Sanskriti
           </span>
         </Link>
-
         <div className="hidden md:flex items-center gap-8">
           <div className="flex items-center gap-2 bg-slate-200/50 dark:bg-white/5 p-1 rounded-full border border-slate-300 dark:border-white/10">
             {navLinks.map((link) => (
