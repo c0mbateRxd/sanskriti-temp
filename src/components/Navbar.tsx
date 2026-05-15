@@ -44,16 +44,16 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <div className="flex items-center gap-2 bg-slate-200/50 dark:bg-white/5 p-1 rounded-full border border-slate-300 dark:border-white/10">
+          <div className="flex items-center gap-1 bg-slate-200/50 dark:bg-white/5 p-1 rounded-full border border-slate-300 dark:border-white/10 overflow-x-auto scrollbar-hide max-w-[600px]">
             {navLinks.map((link) => (
               <Link key={link.path} to={link.path} className={`relative px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === link.path ? 'text-white' : 'text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white'}`}>
                 {location.pathname === link.path && (
                   <motion.div layoutId="nav-bg" className="absolute inset-0 bg-orange-500 rounded-full -z-10 shadow-lg shadow-orange-500/20" transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }} />
                 )}
-                <span className="flex items-center gap-2">
-                  <link.icon className="w-3 h-3" />
-                  {link.label}
-                </span>
+               <span className="flex items-center gap-2" title={link.label}>
+                 <link.icon className="w-3 h-3" />
+                 <span className="hidden xl:block">{link.label}</span>
+             </span>
               </Link>
             ))}
           </div>
