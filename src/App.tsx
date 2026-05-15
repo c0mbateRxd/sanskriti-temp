@@ -19,6 +19,9 @@ import MediaLibrary from './pages/MediaLibrary';
 import AIContentGenerator from './pages/AIContentGenerator';
 import VideoEditor from './pages/VideoEditor';
 import LiveStreamingRoom from './pages/LiveStreamingRoom';
+import Community from './pages/Community';
+import Onboarding from './pages/Onboarding';
+import ArtisanVerify from './pages/ArtisanVerify';
 import { LanguageProvider } from './context/LanguageContext';
 import { UserProvider } from './context/UserContext';
 import Chatbot from './components/Chatbot';
@@ -42,6 +45,7 @@ export default function App() {
                 <Route path="/mentor-dashboard" element={<MentorDashboard />} />
                 <Route path="/live-session" element={<LiveSessionUI />} />
                 <Route path="/community" element={<CommunityForum />} />
+                <Route path="/community/submit" element={<Community />} />
                 <Route path="/library" element={<VideoGallery />} />
                 <Route path="/folklore" element={<FolkloreDashboard />} />
                 <Route path="/folklore/view/:id" element={<StoryViewer />} />
@@ -51,6 +55,8 @@ export default function App() {
                 <Route path="/creator/ai-lab" element={<AIContentGenerator />} />
                 <Route path="/creator/video-editor" element={<VideoEditor />} />
                 <Route path="/live/studio" element={<LiveStreamingRoom />} />
+                <Route path="/onboarding" element={<Onboarding />} />
+                <Route path="/artisan-verify" element={<ArtisanVerify />} />
               </Routes>
             </main>
 
